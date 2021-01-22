@@ -4,10 +4,17 @@ import { IoThumbsUpSharp, IoThumbsDownSharp } from "react-icons/io5";
 import { SiNintendoswitch } from "react-icons/si";
 import { months } from "../data/months";
 import { Button } from "@material-ui/core";
+import ReactPlayer from "react-player";
 import "../css/GamesList.css";
 
 function GamesList({ games }) {
   const [currentHover, setCurrentHover] = useState(-1);
+  const [playVideo, setPlayVideo] = useState(false);
+
+  const onHoverHandler = (value) => {
+    setCurrentHover(value);
+    value === -1 ? setPlayVideo(false) : setPlayVideo(true);
+  };
 
   if (games.length === 0) {
     return <div></div>;
@@ -42,14 +49,34 @@ function GamesList({ games }) {
             className={`game_card ${
               currentHover === 1 ? "show_more_container" : ""
             }`}
-            onMouseEnter={() => {
-              setCurrentHover(1);
-            }}
-            onMouseLeave={() => {
-              setCurrentHover(-1);
-            }}
+            onMouseEnter={() => onHoverHandler(1)}
+            onMouseLeave={() => onHoverHandler(-1)}
           >
-            <div className="game_card_image_container">
+            <div
+              className="game_card_image_container"
+              onClick={() => {
+                setPlayVideo(!playVideo);
+              }}
+            >
+              <div className="video_player" style={{ position: "relative" }}>
+                <ReactPlayer
+                  style={{
+                    position: "absolute",
+                    transition: "500ms",
+                    borderTopLeftRadius: "1em",
+                    borderTopRightRadius: "1em",
+                  }}
+                  width="100%"
+                  height="auto"
+                  loop
+                  muted
+                  fallback
+                  playing={playVideo}
+                  url={`${
+                    currentHover === 1 && playVideo && games[1].clip.clip
+                  }`}
+                />
+              </div>
               <img src={games[1].background_image} alt="" />
             </div>
             <div className="game_card_info">

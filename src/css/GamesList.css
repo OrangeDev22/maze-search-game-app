@@ -28,6 +28,10 @@
   display: none;
 }
 
+.game_card_image_container {
+  transition: all 1500ms;
+}
+
 .game_card_image_container img {
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
