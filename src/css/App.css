@@ -6,7 +6,9 @@
 }
 
 :root {
-  --clr-primary-background: #292b2f;
+  --clr-primary-background: #1c1d20;
+  --clr-primary-dark: #131416;
+  --clr-border: #2e3035;
 }
 
 body {

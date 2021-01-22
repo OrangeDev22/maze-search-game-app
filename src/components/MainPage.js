@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axios";
 import ImageSLider from "./ImageSlider";
+import GamesList from "./GamesList";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
@@ -20,14 +21,18 @@ function MainPage() {
         })
         .then((res) => {
           setTrendingGames(res.data.results);
-          console.log(res);
         });
     }
 
     fetchData();
   }, []);
 
-  return <ImageSLider games={trendingGames.slice(0, 7)} />;
+  return (
+    <main>
+      <ImageSLider games={trendingGames.slice(0, 7)} />
+      <GamesList games={trendingGames} />
+    </main>
+  );
 }
 
 export default MainPage;

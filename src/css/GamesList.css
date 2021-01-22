@@ -1,0 +1,88 @@
+.games_list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.games_list_container {
+  display: grid;
+  margin: 1em;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  grid-gap: 1em;
+}
+
+.game_card {
+  transition: 200ms;
+  border-radius: 1em;
+  display: block;
+
+  background: var(--clr-primary-dark);
+}
+
+.game_card_info {
+  padding: 1em;
+}
+
+.game_card_more_section {
+  display: none;
+}
+
+.game_card_image_container img {
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  width: 100%;
+  object-fit: contain;
+}
+
+.game_card_platforms {
+  display: flex;
+}
+
+.game_card_platform_image {
+  margin-right: 0.5em;
+}
+
+.positive_icon,
+.negative_icon {
+  margin-right: 0.5em;
+}
+
+.show_more_container {
+  transform: scale(1.02);
+  z-index: 6;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.show {
+  transition: all 200ms;
+  display: block;
+  width: 100%;
+  z-index: 9;
+}
+
+.row_element {
+  display: flex;
+  justify-content: center;
+}
+
+.ratings_positive,
+.ratings_negative {
+  display: flex;
+  margin-right: 0.5em;
+}
+
+@media screen and (max-width: 1457px) {
+  .games_list_container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 3000px) and (min-width: 2000px) {
+  .games_list_container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

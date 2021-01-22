@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { makeStyles } from "@material-ui/core";
 import "../css/Slider.css";
 import { IconButton } from "@material-ui/core";
 import { platforms } from "../data/platforms";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FaXbox, FaWindows, FaPlaystation } from "react-icons/fa";
 import { SiNintendoswitch } from "react-icons/si";
 
-const ImageSlider = React.memo(({ games }) => {
-  const [current, setCurrent] = useState(0);
+const useStyles = makeStyles((theme) => ({
+  selectedThumb: {
+    background: theme.palette.primary.main,
+  },
+}));
 
+const ImageSlider = React.memo(({ games }) => {
+  console.log(games);
+  const [current, setCurrent] = useState(0);
+  const classes = useStyles();
   const nextSlide = () => {
     setCurrent(current === games.length - 1 ? 0 : current + 1);
   };
@@ -19,8 +25,6 @@ const ImageSlider = React.memo(({ games }) => {
   const prevSlide = () => {
     setCurrent(current === 0 ? games.length - 1 : current - 1);
   };
-
-  console.log(games);
 
   return (
     <div className="slider">
@@ -48,7 +52,6 @@ const ImageSlider = React.memo(({ games }) => {
                 </h2>
                 <div className="platforms_container">
                   {game.parent_platforms.map((platform) => {
-                    console.log("PLATFORM NAME", platform.platform.name);
                     let foundPlatform = platforms.find(
                       (element) =>
                         element === platform.platform.name.toLowerCase()
@@ -80,7 +83,9 @@ const ImageSlider = React.memo(({ games }) => {
       <div className="slider_thumbs">
         {games.map((game, index) => (
           <div
-            className={`slider_thumb ${index === current && "thumb_selected"}`}
+            className={`slider_thumb ${
+              index === current && classes.selectedThumb
+            }`}
           ></div>
         ))}
       </div>

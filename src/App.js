@@ -1,7 +1,7 @@
 import React from "react";
 import "./css/App.css";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
+import { orange } from "@material-ui/core/colors";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./components/MainPage";
 
@@ -9,10 +9,10 @@ function App() {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: green[400],
+        main: orange[400],
       },
+      type: "dark",
     },
-    type: "dark",
   });
 
   return (

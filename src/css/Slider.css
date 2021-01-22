@@ -1,5 +1,5 @@
 .slider {
-  width: 100vw;
+  width: 100%;
 }
 
 .slider_wrapper {
@@ -78,6 +78,24 @@
 
 .thumb_selected {
   background: rgb(93, 93, 93);
+}
+
+.game_card_table_row_container {
+}
+
+.game_card_table_row {
+  display: flex;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.row_title {
+  flex-grow: 1;
+}
+
+.row_element {
+  margin-right: 2px;
 }
 
 @media only screen and (max-width: 990px) {
