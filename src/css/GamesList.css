@@ -14,7 +14,6 @@
 
 .game_card {
   transition: 200ms;
-  border-radius: 1em;
   display: block;
 
   background: var(--clr-primary-dark);
@@ -33,8 +32,8 @@
 }
 
 .game_card_image_container img {
-  border-top-left-radius: 1em;
-  border-top-right-radius: 1em;
+  /* border-top-left-radius: 1em;
+  border-top-right-radius: 1em; */
   width: 100%;
   object-fit: contain;
 }
@@ -58,6 +57,7 @@
   width: 100%;
   top: 0;
   left: 0;
+  border: solid 0.1em rgb(82, 82, 82);
   position: absolute;
 }
 
