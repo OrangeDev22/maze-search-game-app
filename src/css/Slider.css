@@ -19,8 +19,6 @@
   align-self: end;
   margin-left: 1em;
   grid-column: 1/3;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
 }
 
 .slider_image {
@@ -78,9 +76,6 @@
 
 .thumb_selected {
   background: rgb(93, 93, 93);
-}
-
-.game_card_table_row_container {
 }
 
 .game_card_table_row {

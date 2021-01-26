@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core";
@@ -10,26 +10,26 @@ import { SiNintendoswitch } from "react-icons/si";
 
 const useStyles = makeStyles((theme) => ({
   selectedThumb: {
-    background: theme.palette.primary.main,
+    background: theme.palette.secondary.main,
   },
 }));
 
-const ImageSlider = React.memo(({ games }) => {
-  console.log(games);
+const ImageSlider = ({ games }) => {
   const [current, setCurrent] = useState(0);
   const classes = useStyles();
-  const nextSlide = () => {
-    setCurrent(current === games.length - 1 ? 0 : current + 1);
-  };
 
-  const prevSlide = () => {
+  const nextSlide = useCallback(() => {
+    setCurrent(current === games.length - 1 ? 0 : current + 1);
+  }, [current]);
+
+  const prevSlide = useCallback(() => {
     setCurrent(current === 0 ? games.length - 1 : current - 1);
-  };
+  }, [current]);
 
   return (
-    <div className="slider">
+    <div className="slider" key="slider">
       <div className="slider_wrapper">
-        <IconButton color="primary" size="medium" onClick={prevSlide}>
+        <IconButton color="secondary" size="medium" onClick={prevSlide}>
           <ArrowBackIosIcon fontSize="large" />
         </IconButton>
 
@@ -52,37 +52,32 @@ const ImageSlider = React.memo(({ games }) => {
                 </h2>
                 <div className="platforms_container">
                   {game.parent_platforms.map((platform) => {
-                    let foundPlatform = platforms.find(
-                      (element) =>
-                        element === platform.platform.name.toLowerCase()
-                    );
-
+                    const platformToShow = platform.platform.name.toLowerCase();
                     return (
-                      foundPlatform && (
-                        <div className="platform_image">
-                          {foundPlatform === "xbox" && <FaXbox size={32} />}
-                          {foundPlatform === "pc" && <FaWindows size={32} />}
-                          {foundPlatform === "playstation" && (
-                            <FaPlaystation size={32} />
-                          )}
-                          {foundPlatform === "nintendo" && (
-                            <SiNintendoswitch size={32} />
-                          )}
-                        </div>
-                      )
+                      <div className="platform_image">
+                        {platformToShow === "xbox" && <FaXbox size={32} />}
+                        {platformToShow === "pc" && <FaWindows size={32} />}
+                        {platformToShow === "playstation" && (
+                          <FaPlaystation size={32} />
+                        )}
+                        {platformToShow === "nintendo" && (
+                          <SiNintendoswitch size={32} />
+                        )}
+                      </div>
                     );
                   })}
                 </div>
               </div>
             </div>
           ))}
-        <IconButton color="primary" size="medium" onClick={nextSlide}>
+        <IconButton color="secondary" size="medium" onClick={nextSlide}>
           <ArrowForwardIosIcon fontSize="large" />
         </IconButton>
       </div>
       <div className="slider_thumbs">
         {games.map((game, index) => (
           <div
+            key={index}
             className={`slider_thumb ${
               index === current && classes.selectedThumb
             }`}
@@ -91,6 +86,6 @@ const ImageSlider = React.memo(({ games }) => {
       </div>
     </div>
   );
-});
+};
 
-export default ImageSlider;
+export default React.memo(ImageSlider);
