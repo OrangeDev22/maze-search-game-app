@@ -1,20 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./css/App.css";
 import { GamesProvider } from "./contexts/GamesProvider";
-import {
-  ThemeProvider,
-  createMuiTheme,
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  makeStyles,
-  CircularProgress,
-  TextField,
-} from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import MenuIcon from "@material-ui/icons/Menu";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core";
 import { orange, grey } from "@material-ui/core/colors";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./components/MainPage";
