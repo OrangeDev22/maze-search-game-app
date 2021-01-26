@@ -14,7 +14,7 @@ function GamesList({ games }) {
   const onChange = useCallback(
     debouce((entries, observer) => {
       const element = entries[0];
-      console.log(element.isIntersecting);
+      // console.log(element.isIntersecting);
       if (element.isIntersecting) {
         setLoading(true);
       } else {

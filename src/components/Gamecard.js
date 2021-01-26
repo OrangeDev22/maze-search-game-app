@@ -45,7 +45,7 @@ function Gamecard({ game, index }) {
       style={{
         position: "relative",
         display: "block",
-        height: cardRef.current && cardRef.current.clientHeight,
+        height: index === currentHover && cardRef.current.clientHeight,
       }}
       key={index}
       ref={cardRef}

@@ -7,11 +7,9 @@
 .games_list_container {
   display: grid;
   margin: 1em;
-  grid-row: 1fr;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  /* grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); */
   justify-content: center;
   /* grid-template-columns: repeat(4, 1fr); */
-  /* grid-template-rows: masonry; */
   grid-template-rows: masonry;
   padding: 1em;
   gap: 1em;
@@ -20,8 +18,6 @@
 .game_card {
   transition: 200ms;
   display: block;
-  min-width: 200px;
-  min-height: 200px;
   background: var(--clr-primary-dark);
 }
 
@@ -64,9 +60,6 @@
 .show_more_container {
   transform: scale(1.02);
   z-index: 6;
-  width: 100%;
-  top: 0;
-  left: 0;
   border: solid 0.1em white;
   position: absolute;
 }
@@ -91,42 +84,51 @@
 
 .game_list_visor {
   display: flex;
-  width: 100%;
   align-self: center;
   justify-content: center;
-  margin-bottom: 1em;
 }
 
-/* @media screen and (max-width: 1457px) {
+@media screen and (min-width: 1920px) {
+  .games_list_container {
+    grid-template-columns: repeat(5, minmax(300px, 400px));
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  .games_list_container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (max-width: 1366px) {
   .games_list_container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 1007px) {
   .games_list_container {
-    grid-template-columns: repeat(auto-fit, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media screen and (max-width: 750px) {
-  .games_list_container {
-    grid-template-columns: 1fr;
+@media screen and (max-width: 979px) {
+  .games_list {
+    max-width: 480px;
+    margin: auto;
   }
-  .show {
-    display: none;
-  }
-  .show_more_container {
-    transform: scale(1);
-    border: none;
-    position: static;
-  }
-}
 
- */
-
-@media screen and (max-width: 3000px) and (min-width: 2000px) {
   .games_list_container {
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .game_card {
+    width: 100%;
+  }
+
+  .game_card_wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
 }

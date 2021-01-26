@@ -9,6 +9,7 @@ const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
 function MainPage() {
   const { games, setGames, page } = useGames();
+  const pageSize = 20;
 
   useEffect(() => {
     async function fetchData() {
@@ -17,7 +18,7 @@ function MainPage() {
           params: {
             ordering: "-relevance",
             discover: true,
-            page_size: page > 1 ? 20 : 40,
+            page_size: pageSize,
             page,
             key: API_KEY,
           },
