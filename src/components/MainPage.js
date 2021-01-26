@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "../axios";
 import ImageSLider from "./ImageSlider";
 import GamesList from "./GamesList";
 import { useGames } from "../contexts/GamesProvider";
-import { ClickAwayListener } from "@material-ui/core";
+// import { ClickAwayListener } from "@material-ui/core";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
@@ -29,7 +29,7 @@ function MainPage() {
     }
 
     fetchData();
-  }, [page]);
+  }, [page, setGames]);
 
   useEffect(() => {
     const pictures = games.map((game) => game.background_image);

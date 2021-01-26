@@ -12,7 +12,7 @@ function GamesList({ games }) {
   const { setPage } = useGames();
 
   const onChange = useCallback(
-    debouce((entries, observer) => {
+    debouce((entries) => {
       const element = entries[0];
       // console.log(element.isIntersecting);
       if (element.isIntersecting) {
@@ -20,14 +20,15 @@ function GamesList({ games }) {
       } else {
         setLoading(false);
       }
-    })
+    }),
+    []
   );
 
   useEffect(() => {
     if (loadMore) {
       setPage((prev) => prev + 1);
     }
-  }, [loading, loadMore]);
+  }, [loading, loadMore, setPage]);
 
   useEffect(function () {
     const observer = new IntersectionObserver(onChange, {

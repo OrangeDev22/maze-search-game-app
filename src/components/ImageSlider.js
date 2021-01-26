@@ -4,7 +4,6 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core";
 import "../css/Slider.css";
 import { IconButton } from "@material-ui/core";
-import { platforms } from "../data/platforms";
 import { FaXbox, FaWindows, FaPlaystation } from "react-icons/fa";
 import { SiNintendoswitch } from "react-icons/si";
 
@@ -20,11 +19,11 @@ const ImageSlider = ({ games }) => {
 
   const nextSlide = useCallback(() => {
     setCurrent(current === games.length - 1 ? 0 : current + 1);
-  }, [current]);
+  }, [current, games.length]);
 
   const prevSlide = useCallback(() => {
     setCurrent(current === 0 ? games.length - 1 : current - 1);
-  }, [current]);
+  }, [current, games.length]);
 
   return (
     <div className="slider" key="slider">

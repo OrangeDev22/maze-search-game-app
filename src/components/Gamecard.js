@@ -4,7 +4,6 @@ import { SiNintendoswitch } from "react-icons/si";
 import ReactPlayer from "react-player";
 import debouce from "just-debounce-it";
 import { months } from "../data/months";
-import { platforms } from "../data/platforms";
 import { Button } from "@material-ui/core";
 
 function Gamecard({ game, index }) {
@@ -12,7 +11,7 @@ function Gamecard({ game, index }) {
   const cardRef = useRef();
 
   const onChange = useCallback(
-    debouce((entries, observer) => {
+    debouce((entries) => {
       const element = entries[0];
       if (element.isIntersecting) {
         setShow(true);
