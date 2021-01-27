@@ -1,0 +1,81 @@
+.game_details {
+  background: var(--clr-primary-light);
+  height: 100%;
+  padding: 1em;
+}
+
+.game_details_screenshots {
+  margin-top: 1em;
+  max-width: 700px;
+}
+
+.game_details_screenshots img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.game_media_wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.screenshot_slider {
+  width: 100%;
+}
+
+.screenshots_preview_container {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.screenshots_preview_container::-webkit-scrollbar {
+  background-color: var(--clr-primary-dark);
+}
+
+.screenshots_preview_container::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: rgb(39, 39, 39);
+}
+
+.screenshot_preview_wrapper {
+  min-width: 115px;
+}
+
+.screenshot_slider_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game_details_screenshots {
+  flex-grow: 1;
+}
+
+.game_details_main {
+  max-width: 500px;
+}
+
+.main_image_wrapper img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.game_details_main_image {
+  margin: 1em 0 1em 0;
+}
+
+.game_details_about,
+h3,
+p {
+  margin-bottom: 1em;
+}
+
+.unselected {
+  border: 2px solid rgba(255, 255, 255, 0);
+}
+
+.selected {
+  transition: 500ms;
+  border: white 2px solid;
+}

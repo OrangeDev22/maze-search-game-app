@@ -7,6 +7,7 @@
 
 :root {
   --clr-primary-background: #1c1d20;
+  --clr-primary-light: #1c1c1c;
   --clr-primary-dark: #131416;
   --clr-border: #2e3035;
 }
@@ -14,6 +15,7 @@
 body {
   color: white;
   background: var(--clr-primary-background);
+  height: 100vh;
 }
 
 .Navbar {

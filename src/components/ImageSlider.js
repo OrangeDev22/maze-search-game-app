@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ImageSlider = ({ games }) => {
+const ImageSlider = ({ games, screenshots }) => {
   const [current, setCurrent] = useState(0);
   const classes = useStyles();
 
