@@ -3,12 +3,12 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   IconButton,
   makeStyles,
   CircularProgress,
   TextField,
 } from "@material-ui/core";
+import TemporaryDrawer from "./TemporaryDrawer";
 import { orange, grey } from "@material-ui/core/colors";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -18,9 +18,25 @@ const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: "flex",
+  },
+
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    marginRight: "1em",
+  },
+  autoComplete: {
     flexGrow: 1,
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
 
     color: "purple",
+    "& .MuiFormControl-root": {
+      margin: "auto",
+    },
     "& .MuiOutlinedInput-notchedOutline": {
       borderColor: grey[800],
       borderRadius: "1em",
@@ -36,19 +52,6 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: "1em",
     },
   },
-
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    marginRight: "1em",
-  },
-  autoComplete: {
-    flexGrow: 1,
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-  },
   inputBase: {
     backgroundColor: grey[800],
   },
@@ -60,6 +63,7 @@ function Navbar() {
   const [loading, setLoading] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(0);
   const classes = useStyles();
+  const [anchor, setAnchor] = useState(false);
 
   const typingHandler = async (e) => {
     if (typingTimeout) {
@@ -80,7 +84,7 @@ function Navbar() {
             })
             .then((result) => {
               setLoading(false);
-              setOptions(result.data.results);
+              setOptions(result.data.results.slice(0, 7));
             });
         }
       }, 1000)
@@ -94,11 +98,13 @@ function Navbar() {
   }, [open]);
 
   return (
-    <div className={classes.root}>
+    <div className={`Navbar ${classes.root}`}>
       <AppBar position="static">
         <Toolbar>
+          <TemporaryDrawer isOpen={anchor} setAnchor={setAnchor} />
           <IconButton
             edge="start"
+            onClick={() => setAnchor(true)}
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
@@ -137,6 +143,7 @@ function Navbar() {
                 variant="outlined"
                 InputProps={{
                   ...params.InputProps,
+                  placeholder: "Search a game",
                   endAdornment: (
                     <React.Fragment>
                       {loading ? (
@@ -149,7 +156,6 @@ function Navbar() {
               />
             )}
           />
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>
