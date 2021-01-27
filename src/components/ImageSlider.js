@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import "../css/Slider.css";
 import { IconButton } from "@material-ui/core";
 import { FaXbox, FaWindows, FaPlaystation } from "react-icons/fa";
@@ -34,40 +35,45 @@ const ImageSlider = ({ games }) => {
 
         {games &&
           games.map((game, index) => (
-            <div
-              className={`slider_image_container ${
-                index === current && "active"
-              } ${index !== current ? "hide" : ""}`}
-              key={index}
+            <Link
+              to={`/games/${game.id}/${game.name}`}
+              style={{ textDecoration: "none", color: "white" }}
             >
-              <img
-                className={`slider_image`}
-                src={game.background_image}
-                alt=""
-              />
-              <div className="game_details_header">
-                <h2 className="game_title" style={{ marginBottom: "0.5em" }}>
-                  {game.name}
-                </h2>
-                <div className="platforms_container">
-                  {game.parent_platforms.map((platform) => {
-                    const platformToShow = platform.platform.name.toLowerCase();
-                    return (
-                      <div className="platform_image">
-                        {platformToShow === "xbox" && <FaXbox size={32} />}
-                        {platformToShow === "pc" && <FaWindows size={32} />}
-                        {platformToShow === "playstation" && (
-                          <FaPlaystation size={32} />
-                        )}
-                        {platformToShow === "nintendo" && (
-                          <SiNintendoswitch size={32} />
-                        )}
-                      </div>
-                    );
-                  })}
+              <div
+                className={`slider_image_container ${
+                  index === current && "active"
+                } ${index !== current ? "hide" : ""}`}
+                key={index}
+              >
+                <img
+                  className={`slider_image`}
+                  src={game.background_image}
+                  alt=""
+                />
+                <div className="game_details_header">
+                  <h2 className="game_title" style={{ marginBottom: "0.5em" }}>
+                    {game.name}
+                  </h2>
+                  <div className="platforms_container">
+                    {game.parent_platforms.map((platform) => {
+                      const platformToShow = platform.platform.name.toLowerCase();
+                      return (
+                        <div className="platform_image">
+                          {platformToShow === "xbox" && <FaXbox size={32} />}
+                          {platformToShow === "pc" && <FaWindows size={32} />}
+                          {platformToShow === "playstation" && (
+                            <FaPlaystation size={32} />
+                          )}
+                          {platformToShow === "nintendo" && (
+                            <SiNintendoswitch size={32} />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         <IconButton color="secondary" size="medium" onClick={nextSlide}>
           <ArrowForwardIosIcon fontSize="large" />

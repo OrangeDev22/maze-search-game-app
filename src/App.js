@@ -6,6 +6,7 @@ import { orange, grey } from "@material-ui/core/colors";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./components/MainPage";
 import Navbar from "./components/Navbar";
+import GameDetails from "./components/GameDetails";
 
 function App() {
   const theme = createMuiTheme({
@@ -28,12 +29,15 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Navbar />
         <GamesProvider>
           <Router>
+            <Navbar />
             <Switch>
               <Route exact path="/">
                 <MainPage />
+              </Route>
+              <Route path="/games/:rawId/:gameName">
+                <GameDetails />
               </Route>
             </Switch>
           </Router>

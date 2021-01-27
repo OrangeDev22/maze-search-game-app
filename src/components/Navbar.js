@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -111,9 +112,11 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            MAZE
-          </Typography>
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <Typography variant="h6" className={classes.title}>
+              MAZE
+            </Typography>
+          </Link>
 
           <Autocomplete
             freeSolo
