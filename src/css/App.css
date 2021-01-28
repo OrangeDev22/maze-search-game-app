@@ -8,6 +8,7 @@
 :root {
   --clr-primary-background: #1c1d20;
   --clr-primary-light: #1c1c1c;
+  --clr-details-background: #242424;
   --clr-primary-dark: #131416;
   --clr-border: #2e3035;
 }

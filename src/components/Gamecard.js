@@ -75,11 +75,6 @@ function Gamecard({ game, index }) {
                 style={{ position: "absolute", height: "100%" }}
               >
                 <ReactPlayer
-                  style={{
-                    transition: "500ms",
-                    borderTopLeftRadius: "1em",
-                    borderTopRightRadius: "1em",
-                  }}
                   width="100%"
                   height="auto"
                   loop

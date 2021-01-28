@@ -1,0 +1,48 @@
+.game_details_screenshots img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.screenshot_slider {
+  width: 100%;
+}
+
+.screenshots_preview_container {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  cursor: pointer;
+}
+
+.screenshots_preview_container::-webkit-scrollbar {
+  background-color: var(--clr-primary-dark);
+}
+
+.screenshots_preview_container::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: rgb(39, 39, 39);
+}
+
+.screenshot_preview_wrapper {
+  min-width: 50px;
+}
+
+.screenshot_slider_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unselected {
+  border: 2px solid rgba(255, 255, 255, 0);
+}
+
+.unselected:hover {
+  transition: 500ms;
+  border-color: rgb(88, 88, 88);
+}
+
+.selected {
+  transition: 500ms;
+  border: white 2px solid;
+}

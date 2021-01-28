@@ -1,12 +1,6 @@
 import React, { useState, useCallback } from "react";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import "../css/Slider.css";
-import { IconButton } from "@material-ui/core";
-import { FaXbox, FaWindows, FaPlaystation } from "react-icons/fa";
-import { SiNintendoswitch } from "react-icons/si";
+import "../css/Screenshots.css";
 
 const useStyles = makeStyles((theme) => ({
   selectedThumb: {
