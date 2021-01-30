@@ -51,11 +51,11 @@ function GameDetails() {
                   .get(`/games/${rawId}/suggested`, {
                     params: {
                       key: API_KEY,
+                      page_size: 8,
                     },
                   })
                   .then((response) => {
                     setSuggestedGames(response.data.results);
-                    console.log(response.data.results);
                     setLoading(false);
                   });
               });
@@ -230,6 +230,12 @@ function GameDetails() {
           developer={developer}
         />
         <Stores stores={primaryDetails.stores} />
+      </div>
+      <div className="game_details_suggested_games">
+        <div style={{ textAlign: "center", margin: "1em 0 1em 0" }}>
+          <h2>Similar titles</h2>
+        </div>
+        <GamesList games={suggestedGames} inDetails={true} />
       </div>
     </div>
   );

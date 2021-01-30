@@ -5,8 +5,9 @@ import { Button, CircularProgress } from "@material-ui/core";
 import { useGames } from "../contexts/GamesProvider";
 import Gamecard from "./Gamecard";
 
-function GamesList({ games }) {
+function GamesList({ games, inDetails }) {
   const visorRef = useRef();
+  const cancelMore = inDetails ? true : false;
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const { setPage } = useGames();
@@ -51,19 +52,21 @@ function GamesList({ games }) {
         })}
       </div>
       <div className="game_list_visor" ref={visorRef}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={() => setLoadMore(true)}
-          style={{ width: "20rem", padding: "0.8em" }}
-        >
-          {loading && loadMore ? (
-            <CircularProgress color="secondary" />
-          ) : (
-            "Load More"
-          )}
-        </Button>
+        {cancelMore || (
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => setLoadMore(true)}
+            style={{ width: "20rem", padding: "0.8em" }}
+          >
+            {loading && loadMore ? (
+              <CircularProgress color="secondary" />
+            ) : (
+              "Load More"
+            )}
+          </Button>
+        )}
       </div>
     </div>
   );

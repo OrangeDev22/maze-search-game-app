@@ -86,6 +86,10 @@ p {
   margin-bottom: 2em;
 }
 
+.game_meta_text {
+  word-wrap: break-word;
+}
+
 .meta_title {
   margin-bottom: 8px;
 }
@@ -145,6 +149,11 @@ p {
 .low_score {
   border-color: red;
   color: red;
+}
+
+.game_details_suggested_games {
+  max-width: 1250px;
+  margin: auto;
 }
 
 @media screen and (min-width: 1920px) {
