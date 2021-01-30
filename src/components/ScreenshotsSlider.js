@@ -27,15 +27,17 @@ const ScreenshotsSlider = ({ screenshots }) => {
           screenshots.map((screenshot, index) => (
             <div
               className={`screenshot_slider_image_container ${
-                index === current && "active"
+                index === current && "screenshot_active"
               } ${index !== current ? "hide" : ""}`}
               key={index}
             >
-              <img
-                className={`screenshot_slider_image`}
-                src={screenshot.image}
-                alt=""
-              />
+              <div className="screenshot_holder">
+                <img
+                  className={`screenshot_slider_image`}
+                  src={screenshot.image}
+                  alt=""
+                />
+              </div>
             </div>
           ))}
       </div>

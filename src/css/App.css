@@ -22,6 +22,10 @@ body {
 .Navbar {
   justify-content: center;
 }
+
+span {
+  color: darkgray;
+}
 /*
 
   display: grid;

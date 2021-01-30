@@ -5,6 +5,7 @@ import ReactPlayer from "react-player";
 import debouce from "just-debounce-it";
 import { months } from "../data/months";
 import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 function Gamecard({ game, index }) {
   const [show, setShow] = useState(false);
@@ -135,32 +136,37 @@ function Gamecard({ game, index }) {
                     {game.metacritic && (
                       <div className="game_card_table_row">
                         <div className="row_title">Metacritic:</div>
-                        <div className="row_element">{game.metacritic} %</div>
+                        <div className="row_element">
+                          {game.metacritic
+                            ? `${game.metacritic}%`
+                            : "Not rated yet"}{" "}
+                        </div>
                       </div>
                     )}
 
                     <div className="game_card_table_row">
                       <div className="row_title">Release Date:</div>
                       <div className="row_element">
-                        {months[parseInt(game.released.split("-")[1]) - 1]}
-                      </div>
-                      <div className="row_element">
-                        {game.released.split("-")[2]}
-                      </div>
-                      <div className="row_element">
-                        ,{game.released.split("-")[0]}
+                        {game.released
+                          ? new Date(game.released).toDateString()
+                          : ""}
                       </div>
                     </div>
                   </div>
                 </div>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  style={{ color: "white", marginTop: "0.5em" }}
+                <Link
+                  to={`/games/${game.id}/${game.name}`}
+                  style={{ textDecoration: "none", color: "white" }}
                 >
-                  See More
-                </Button>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    color="primary"
+                    style={{ color: "white", marginTop: "0.5em" }}
+                  >
+                    See More
+                  </Button>
+                </Link>
               </div>
             </div>
           )}

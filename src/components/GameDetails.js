@@ -2,21 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { CircularProgress, Divider } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
-import { months } from "../data/months";
+import Stores from "./Stores";
 import axios from "../axios";
 import "../css/GameDetails.css";
+import Gamemeta from "./Gamemeta";
 import ScreenshotsSlider from "./ScreenshotsSlider";
+import GamesList from "./GamesList";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
 function GameDetails() {
-  const { rawId } = useParams();
+  const params = useParams();
+  const { rawId } = params;
   const [primaryDetails, setPrimary] = useState(null);
   const [screenshots, setScreenshots] = useState([]);
+  const [suggestedGames, setSuggestedGames] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [rating, setRating] = useState(null);
+  const [releaseDate, setReleaseDate] = useState(null);
+  const [developer, setDeveloper] = useState("Not available");
+  const [publisher, setPublisher] = useState("Not available");
+  const [ageRating, setAgeRating] = useState("Not rated yet");
+  const [metascore, setMetascore] = useState(null);
+  const [website, setWebsite] = useState("");
   const history = useHistory();
 
   useEffect(() => {
+    setLoading(true);
     const fetchGameData = () => {
       if (rawId) {
         axios
@@ -34,14 +46,49 @@ function GameDetails() {
                 },
               })
               .then((response) => {
-                setLoading(false);
                 setScreenshots(response.data.results);
+                axios
+                  .get(`/games/${rawId}/suggested`, {
+                    params: {
+                      key: API_KEY,
+                    },
+                  })
+                  .then((response) => {
+                    setSuggestedGames(response.data.results);
+                    console.log(response.data.results);
+                    setLoading(false);
+                  });
               });
           });
       }
     };
     fetchGameData();
-  }, []);
+  }, [params]);
+
+  useEffect(() => {
+    if (primaryDetails) {
+      primaryDetails.rating && setRating(primaryDetails.rating);
+      primaryDetails.released && setReleaseDate(primaryDetails.released);
+      primaryDetails.developers.length > 0 &&
+        setDeveloper(primaryDetails.developers[0].name);
+      primaryDetails.publishers.length > 0 &&
+        setPublisher(primaryDetails.publishers[0].name);
+      primaryDetails.esrb_rating &&
+        setAgeRating(primaryDetails.esrb_rating.name);
+      primaryDetails.metacritic && setMetascore(primaryDetails.metacritic);
+      primaryDetails.website && setWebsite(primaryDetails.website);
+    }
+  }, [primaryDetails]);
+
+  useEffect(() => {
+    setRating(null);
+    setReleaseDate(null);
+    setDeveloper("Not available");
+    setPublisher("Not available");
+    setAgeRating("Not available");
+    setMetascore(null);
+    setWebsite("");
+  }, [params]);
 
   if (loading)
     return (
@@ -59,7 +106,7 @@ function GameDetails() {
     <div className="game_details">
       <div className="game_details_wrapper">
         <div className="game_title">
-          <h1>{primaryDetails.name}</h1>
+          <h1 style={{ fontWeight: "normal" }}>{primaryDetails.name}</h1>
         </div>
         <div className="game_details_screenshots">
           <ScreenshotsSlider screenshots={screenshots} />
@@ -83,9 +130,9 @@ function GameDetails() {
               }}
             >
               <p>Ratings:</p>
-              <p
-                style={{ marginLeft: "auto" }}
-              >{`${primaryDetails.rating}/5`}</p>
+              <p style={{ marginLeft: "auto" }}>{`${
+                rating ? `${rating}/5` : "Not rated yet"
+              }`}</p>
             </div>
             <Divider />
             <div
@@ -118,7 +165,9 @@ function GameDetails() {
             >
               <p>Release Date:</p>
               <p style={{ marginLeft: "auto" }}>
-                {new Date(primaryDetails.released).toDateString()}
+                {releaseDate
+                  ? new Date(releaseDate).toDateString()
+                  : "Unavailable"}
               </p>
             </div>
             <Divider />
@@ -130,9 +179,7 @@ function GameDetails() {
               }}
             >
               <p>Developer:</p>
-              <p style={{ marginLeft: "auto" }}>
-                {primaryDetails.developers[0].name}
-              </p>
+              <p style={{ marginLeft: "auto" }}>{developer}</p>
             </div>
             <Divider />
             <div
@@ -143,32 +190,46 @@ function GameDetails() {
               }}
             >
               <p>Publisher:</p>
-              <p style={{ marginLeft: "auto" }}>
-                {primaryDetails.publishers[0].name}
-              </p>
+              <p style={{ marginLeft: "auto" }}>{publisher}</p>
             </div>
           </div>
         </div>
+      </div>
+      <div className="game_details_info">
         <div className="game_details_main">
-          <div className="game_details_description">
-            {primaryDetails.description_raw
-              .split("###")
-              .map((section, index) => {
-                if (index > 0) {
-                  return section.split("\n").map((text, i) => {
-                    return i === 0 ? <h3>{text}</h3> : <p>{text}</p>;
-                  });
-                } else {
-                  return (
-                    <div className="game_details_about">
-                      <h3>About</h3>
-                      <p>{section}</p>
-                    </div>
-                  );
-                }
-              })}
-          </div>
+          {primaryDetails.description_raw && (
+            <div className="game_details_description">
+              {primaryDetails.description_raw
+                .split("#")
+                .map((section, index) => {
+                  if (index > 0) {
+                    return section.split("\n").map((text, i) => {
+                      return i === 0 ? <h3>{text}</h3> : <p>{text}</p>;
+                    });
+                  } else {
+                    return (
+                      <div className="game_details_about">
+                        <h3>About</h3>
+                        <p>{section}</p>
+                      </div>
+                    );
+                  }
+                })}
+            </div>
+          )}
         </div>
+      </div>
+      <div className="game_details_meta">
+        <Gamemeta
+          metaDetails={primaryDetails}
+          metascore={metascore}
+          releaseDate={releaseDate}
+          publisher={publisher}
+          website={website}
+          ageRating={ageRating}
+          developer={developer}
+        />
+        <Stores stores={primaryDetails.stores} />
       </div>
     </div>
   );

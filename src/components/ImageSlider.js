@@ -30,7 +30,7 @@ const ImageSlider = ({ games, screenshots }) => {
     <div className="slider" key="slider">
       <div className="slider_wrapper">
         <IconButton color="secondary" size="medium" onClick={prevSlide}>
-          <ArrowBackIosIcon fontSize="large" />
+          <ArrowBackIosIcon fontSize="large" color="secondary" />
         </IconButton>
 
         {games &&
@@ -76,7 +76,7 @@ const ImageSlider = ({ games, screenshots }) => {
             </Link>
           ))}
         <IconButton color="secondary" size="medium" onClick={nextSlide}>
-          <ArrowForwardIosIcon fontSize="large" />
+          <ArrowForwardIosIcon fontSize="large" color="secondary" />
         </IconButton>
       </div>
       <div className="slider_thumbs">
