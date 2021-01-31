@@ -111,6 +111,7 @@ p {
 
 .game_details_meta_container {
   display: flex;
+  width: 50%;
 }
 
 .stores_container {

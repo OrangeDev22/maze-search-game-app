@@ -47,6 +47,7 @@ const ScreenshotsSlider = ({ screenshots }) => {
             className={`screenshot_preview_wrapper ${
               current === index ? "selected" : "unselected"
             }`}
+            key={`screenshot_preview_${index}`}
             onClick={() => setCurrent(index)}
           >
             <img key={index} src={screenshot.image} alt="" />

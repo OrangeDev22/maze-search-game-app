@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { CircularProgress, Divider } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import Stores from "./Stores";
 import axios from "../axios";
@@ -8,12 +8,12 @@ import "../css/GameDetails.css";
 import Gamemeta from "./Gamemeta";
 import ScreenshotsSlider from "./ScreenshotsSlider";
 import GamesList from "./GamesList";
+import GameDetailsCard from "./GameDetailsCard";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
 function GameDetails() {
-  const params = useParams();
-  const { rawId } = params;
+  const { rawId } = useParams();
   const [primaryDetails, setPrimary] = useState(null);
   const [screenshots, setScreenshots] = useState([]);
   const [suggestedGames, setSuggestedGames] = useState([]);
@@ -63,7 +63,7 @@ function GameDetails() {
       }
     };
     fetchGameData();
-  }, [params]);
+  }, [rawId]);
 
   useEffect(() => {
     if (primaryDetails) {
@@ -88,7 +88,7 @@ function GameDetails() {
     setAgeRating("Not available");
     setMetascore(null);
     setWebsite("");
-  }, [params]);
+  }, [rawId]);
 
   if (loading)
     return (
@@ -111,89 +111,14 @@ function GameDetails() {
         <div className="game_details_screenshots">
           <ScreenshotsSlider screenshots={screenshots} />
         </div>
-        <div className="game_details_right">
-          <div className="game_details_main_image">
-            <div className="main_image_container">
-              <div className="main_image_wrapper">
-                <img src={primaryDetails.background_image} alt="" />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                marginTop: "1em",
-                padding: "0 1em 0 1em",
-              }}
-            >
-              <p>Ratings:</p>
-              <p style={{ marginLeft: "auto" }}>{`${
-                rating ? `${rating}/5` : "Not rated yet"
-              }`}</p>
-            </div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                marginTop: "1em",
-                padding: "0 1em 0 1em",
-              }}
-            >
-              <p>Genres:</p>
-              <div
-                className="genres_wrapper"
-                style={{ display: "flex", marginLeft: "auto" }}
-              >
-                {primaryDetails.genres.map((genre, index) => (
-                  <p style={{ marginLeft: 4 }} key={index}>
-                    {genre.name}
-                    {index !== primaryDetails.genres.length - 1 && ","}
-                  </p>
-                ))}
-              </div>
-            </div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                marginTop: "1em",
-                padding: "0 1em 0 1em",
-              }}
-            >
-              <p>Release Date:</p>
-              <p style={{ marginLeft: "auto" }}>
-                {releaseDate
-                  ? new Date(releaseDate).toDateString()
-                  : "Unavailable"}
-              </p>
-            </div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                marginTop: "1em",
-                padding: "0 1em 0 1em",
-              }}
-            >
-              <p>Developer:</p>
-              <p style={{ marginLeft: "auto" }}>{developer}</p>
-            </div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                marginTop: "1em",
-                padding: "0 1em 0 1em",
-              }}
-            >
-              <p>Publisher:</p>
-              <p style={{ marginLeft: "auto" }}>{publisher}</p>
-            </div>
-          </div>
-        </div>
+        <GameDetailsCard
+          background_image={primaryDetails.background_image}
+          rating={rating}
+          genres={primaryDetails.genres}
+          releaseDate={releaseDate}
+          developer={developer}
+          publisher={publisher}
+        />
       </div>
       <div className="game_details_info">
         <div className="game_details_main">
@@ -204,11 +129,18 @@ function GameDetails() {
                 .map((section, index) => {
                   if (index > 0) {
                     return section.split("\n").map((text, i) => {
-                      return i === 0 ? <h3>{text}</h3> : <p>{text}</p>;
+                      return i === 0 ? (
+                        <h3 key={`game_details_about_title_${i}`}>{text}</h3>
+                      ) : (
+                        <p key={`game_details_about_text_${i}`}>{text}</p>
+                      );
                     });
                   } else {
                     return (
-                      <div className="game_details_about">
+                      <div
+                        className="game_details_about"
+                        key={`game_details_about_title_header_${index}`}
+                      >
                         <h3>About</h3>
                         <p>{section}</p>
                       </div>
@@ -235,7 +167,9 @@ function GameDetails() {
         <div style={{ textAlign: "center", margin: "1em 0 1em 0" }}>
           <h2>Similar titles</h2>
         </div>
-        <GamesList games={suggestedGames} inDetails={true} />
+        {suggestedGames && (
+          <GamesList games={suggestedGames} inDetails={true} />
+        )}
       </div>
     </div>
   );

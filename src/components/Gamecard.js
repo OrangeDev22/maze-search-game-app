@@ -3,13 +3,15 @@ import { FaXbox, FaWindows, FaPlaystation } from "react-icons/fa";
 import { SiNintendoswitch } from "react-icons/si";
 import ReactPlayer from "react-player";
 import debouce from "just-debounce-it";
-import { months } from "../data/months";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 function Gamecard({ game, index }) {
   const [show, setShow] = useState(false);
   const cardRef = useRef();
+  const gameClip = game.clip;
+  const [currentHover, setCurrentHover] = useState(-1);
+  const [playVideo, setPlayVideo] = useState(false);
 
   const onChange = useCallback(
     debouce((entries) => {
@@ -32,9 +34,6 @@ function Gamecard({ game, index }) {
     return () => observer.disconnect();
   });
 
-  const gameClip = game.clip;
-  const [currentHover, setCurrentHover] = useState(-1);
-  const [playVideo, setPlayVideo] = useState(false);
   const onHoverHandler = (value) => {
     setCurrentHover(value);
     value === -1 ? setPlayVideo(false) : setPlayVideo(true);

@@ -3,7 +3,6 @@ import { FaSteam, FaPlaystation, FaXbox } from "react-icons/fa";
 import { SiGogDotCom, SiNintendo, SiEpicgames } from "react-icons/si";
 
 function Stores({ stores }) {
-  console.log(stores);
   return (
     <div className="stores_container">
       <h2>Available stores</h2>

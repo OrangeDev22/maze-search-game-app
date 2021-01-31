@@ -38,12 +38,12 @@ const ImageSlider = ({ games, screenshots }) => {
             <Link
               to={`/games/${game.id}/${game.name}`}
               style={{ textDecoration: "none", color: "white" }}
+              key={`slider_image_${index}`}
             >
               <div
                 className={`slider_image_container ${
                   index === current && "active"
                 } ${index !== current ? "hide" : ""}`}
-                key={index}
               >
                 <img
                   className={`slider_image`}
@@ -55,10 +55,13 @@ const ImageSlider = ({ games, screenshots }) => {
                     {game.name}
                   </h2>
                   <div className="platforms_container">
-                    {game.parent_platforms.map((platform) => {
+                    {game.parent_platforms.map((platform, index) => {
                       const platformToShow = platform.platform.name.toLowerCase();
                       return (
-                        <div className="platform_image">
+                        <div
+                          className="platform_image"
+                          key={`slider_platform_image_${index}`}
+                        >
                           {platformToShow === "xbox" && <FaXbox size={32} />}
                           {platformToShow === "pc" && <FaWindows size={32} />}
                           {platformToShow === "playstation" && (
@@ -82,7 +85,7 @@ const ImageSlider = ({ games, screenshots }) => {
       <div className="slider_thumbs">
         {games.map((game, index) => (
           <div
-            key={index}
+            key={`slider_thumb_${index}`}
             className={`slider_thumb ${
               index === current && classes.selectedThumb
             }`}

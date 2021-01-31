@@ -10,7 +10,6 @@ function Gamemeta({
   developer,
 }) {
   const metaranking = (metascore) => {
-    console.log(metascore);
     if (metascore > 74) {
       return "high_score";
     } else if (metascore < 75) {
@@ -33,8 +32,8 @@ function Gamemeta({
             <div className="game_details_platforms_wrapper">
               {metaDetails.platforms.map((platform, index) => (
                 <span
+                  key={`game_details_platforms_${index}`}
                   style={{ marginRight: 4, color: "white" }}
-                  key={platform.name}
                 >{`${platform.platform.name}${
                   index !== metaDetails.platforms.length - 1 ? "," : ""
                 }`}</span>
@@ -49,7 +48,7 @@ function Gamemeta({
               {metaDetails.genres.map((genre, index) => (
                 <span
                   style={{ marginRight: 4, color: "white" }}
-                  key={genre.name}
+                  key={`game_meta_text_${index}`}
                 >{`${genre.name}${
                   index !== metaDetails.genres.length - 1 ? "," : ""
                 }`}</span>
@@ -70,7 +69,7 @@ function Gamemeta({
         <div className="game_details_panel right">
           {["Metascore", "Release Date", "Publisher", "Website"].map(
             (title, index) => (
-              <div className="game_meta_block" key={`meta_${title}`}>
+              <div className="game_meta_block" key={`meta_block_${title}`}>
                 <div className="meta_title">
                   <span>{title}</span>
                 </div>
