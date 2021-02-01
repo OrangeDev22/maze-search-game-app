@@ -169,4 +169,12 @@ p {
 }
 
 @media screen and (max-width: 979px) {
+  .game_details_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    justify-content: center;
+    gap: 1em;
+  }
 }
