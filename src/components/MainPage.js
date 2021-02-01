@@ -3,6 +3,7 @@ import axios from "../axios";
 import ImageSLider from "./ImageSlider";
 import GamesList from "./GamesList";
 import { useGames } from "../contexts/GamesProvider";
+import { useApp } from "../contexts/AppProvider";
 // import { ClickAwayListener } from "@material-ui/core";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
@@ -10,6 +11,7 @@ const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 function MainPage() {
   const { games, setGames, page } = useGames();
   const pageSize = 20;
+  const { screenWidth } = useApp();
 
   useEffect(() => {
     async function fetchData() {
@@ -48,7 +50,9 @@ function MainPage() {
 
   return (
     <main>
-      <ImageSLider games={games.slice(0, 7)} key="ImageSlider" />
+      {screenWidth > 979 && (
+        <ImageSLider games={games.slice(0, 7)} key="ImageSlider" />
+      )}
       <GamesList games={games} key="GamesList" />
     </main>
   );

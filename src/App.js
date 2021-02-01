@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./components/MainPage";
 import Navbar from "./components/Navbar";
 import GameDetails from "./components/GameDetails";
+import { AppProvider } from "./contexts/AppProvider";
 
 function App() {
   const theme = createMuiTheme({
@@ -29,19 +30,21 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <GamesProvider>
-          <Router>
-            <Navbar />
-            <Switch>
-              <Route exact path="/">
-                <MainPage />
-              </Route>
-              <Route path="/games/:rawId/:gameName">
-                <GameDetails />
-              </Route>
-            </Switch>
-          </Router>
-        </GamesProvider>
+        <AppProvider>
+          <GamesProvider>
+            <Router>
+              <Navbar />
+              <Switch>
+                <Route exact path="/">
+                  <MainPage />
+                </Route>
+                <Route path="/games/:rawId/:gameName">
+                  <GameDetails />
+                </Route>
+              </Switch>
+            </Router>
+          </GamesProvider>
+        </AppProvider>
       </ThemeProvider>
     </div>
   );

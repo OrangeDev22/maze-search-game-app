@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
@@ -25,7 +25,15 @@ function GameDetails() {
   const [ageRating, setAgeRating] = useState("Not rated yet");
   const [metascore, setMetascore] = useState(null);
   const [website, setWebsite] = useState("");
+  const isMounted = useRef(null);
   const history = useHistory();
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -56,13 +64,27 @@ function GameDetails() {
                   })
                   .then((response) => {
                     setSuggestedGames(response.data.results);
-                    setLoading(false);
+                  })
+                  .finally(() => {
+                    if (isMounted.current) {
+                      setLoading(false);
+                    }
                   });
               });
           });
       }
     };
     fetchGameData();
+    return () => {
+      setRating(null);
+      setReleaseDate(null);
+      setDeveloper("Not available");
+      setPublisher("Not available");
+      setAgeRating("Not available");
+      setMetascore(null);
+      setWebsite("");
+      setSuggestedGames(null);
+    };
   }, [rawId]);
 
   useEffect(() => {
@@ -79,16 +101,6 @@ function GameDetails() {
       primaryDetails.website && setWebsite(primaryDetails.website);
     }
   }, [primaryDetails]);
-
-  useEffect(() => {
-    setRating(null);
-    setReleaseDate(null);
-    setDeveloper("Not available");
-    setPublisher("Not available");
-    setAgeRating("Not available");
-    setMetascore(null);
-    setWebsite("");
-  }, [rawId]);
 
   if (loading)
     return (
@@ -167,6 +179,7 @@ function GameDetails() {
         <div style={{ textAlign: "center", margin: "1em 0 1em 0" }}>
           <h2>Similar titles</h2>
         </div>
+
         {suggestedGames && (
           <GamesList games={suggestedGames} inDetails={true} />
         )}

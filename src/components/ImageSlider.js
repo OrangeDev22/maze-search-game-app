@@ -7,6 +7,7 @@ import "../css/Slider.css";
 import { IconButton } from "@material-ui/core";
 import { FaXbox, FaWindows, FaPlaystation } from "react-icons/fa";
 import { SiNintendoswitch } from "react-icons/si";
+import { useGames } from "../contexts/GamesProvider";
 
 const useStyles = makeStyles((theme) => ({
   selectedThumb: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 const ImageSlider = ({ games, screenshots }) => {
   const [current, setCurrent] = useState(0);
   const classes = useStyles();
+  const { setGames, setPage } = useGames();
 
   const nextSlide = useCallback(() => {
     setCurrent(current === games.length - 1 ? 0 : current + 1);
@@ -36,6 +38,10 @@ const ImageSlider = ({ games, screenshots }) => {
         {games &&
           games.map((game, index) => (
             <Link
+              onClick={() => {
+                setGames([]);
+                setPage(1);
+              }}
               to={`/games/${game.id}/${game.name}`}
               style={{ textDecoration: "none", color: "white" }}
               key={`slider_image_${index}`}

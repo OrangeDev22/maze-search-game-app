@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import MenuIcon from "@material-ui/icons/Menu";
 import axios from "../axios";
+import { useGames } from "../contexts/GamesProvider";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
@@ -66,16 +67,18 @@ function Navbar() {
   const [typingTimeout, setTypingTimeout] = useState(0);
   const classes = useStyles();
   const [anchor, setAnchor] = useState(false);
+  const { setGames, setPage } = useGames();
   const history = useHistory();
 
   const autocompleteHandler = (value) => {
+    setGames([]);
+    setPage(1);
     value instanceof Object && history.push(`/games/${value.id}/${value.name}`);
   };
 
   const typingHandler = async (e) => {
     if (typingTimeout) {
       clearTimeout(typingTimeout);
-      // open && setOptions([]);
     }
 
     setTypingTimeout(
@@ -91,7 +94,6 @@ function Navbar() {
             })
             .then((result) => {
               setLoading(false);
-              console.log(result.data.results.slice(0, 7));
               setOptions(result.data.results.slice(0, 7));
             });
         }
@@ -129,12 +131,12 @@ function Navbar() {
             freeSolo
             className={classes.autoComplete}
             id="free-solo-2-demo"
-            // disableClearable
+            disableClearable
             size="small"
             onChange={(event, value) => autocompleteHandler(value)}
-            // getOptionSelected={(option, value) => {
-            //   return value.name ? option.name === value.name : "";
-            // }}
+            getOptionSelected={(option, value) => {
+              return value.name ? option.name === value.name : "";
+            }}
             filterOptions={(options) => options}
             onOpen={() => {
               setOpen(true);

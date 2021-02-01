@@ -119,6 +119,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 8px;
+    padding: 8px;
   }
   .game_card {
     width: 100%;

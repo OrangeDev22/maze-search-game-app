@@ -4,19 +4,23 @@ import { SiNintendoswitch } from "react-icons/si";
 import ReactPlayer from "react-player";
 import debouce from "just-debounce-it";
 import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useGames } from "../contexts/GamesProvider";
 
 function Gamecard({ game, index }) {
   const [show, setShow] = useState(false);
   const cardRef = useRef();
   const gameClip = game.clip;
+  const { setGames, setPage } = useGames();
   const [currentHover, setCurrentHover] = useState(-1);
   const [playVideo, setPlayVideo] = useState(false);
+  const isMounted = useRef(null);
+  const history = useHistory();
 
   const onChange = useCallback(
     debouce((entries) => {
       const element = entries[0];
-      if (element.isIntersecting) {
+      if (element.isIntersecting && isMounted.current) {
         setShow(true);
       } else {
         setShow(false);
@@ -24,6 +28,13 @@ function Gamecard({ game, index }) {
     }, 500),
     []
   );
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  });
 
   useEffect(function () {
     const observer = new IntersectionObserver(onChange, {
@@ -153,19 +164,19 @@ function Gamecard({ game, index }) {
                     </div>
                   </div>
                 </div>
-                <Link
-                  to={`/games/${game.id}/${game.name}`}
-                  style={{ textDecoration: "none", color: "white" }}
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => {
+                    setGames([]);
+                    setPage(1);
+                    history.push(`/games/${game.id}/${game.name}`);
+                  }}
+                  color="primary"
+                  style={{ color: "white", marginTop: "0.5em" }}
                 >
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    color="primary"
-                    style={{ color: "white", marginTop: "0.5em" }}
-                  >
-                    See More
-                  </Button>
-                </Link>
+                  See More
+                </Button>
               </div>
             </div>
           )}
