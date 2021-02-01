@@ -6,9 +6,11 @@ import debouce from "just-debounce-it";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useGames } from "../contexts/GamesProvider";
+import { useApp } from "../contexts/AppProvider";
 
 function Gamecard({ game, index }) {
   const [show, setShow] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const cardRef = useRef();
   const gameClip = game.clip;
   const { setGames, setPage } = useGames();
@@ -16,6 +18,7 @@ function Gamecard({ game, index }) {
   const [playVideo, setPlayVideo] = useState(false);
   const isMounted = useRef(null);
   const history = useHistory();
+  const { screenWidth } = useApp();
 
   const onChange = useCallback(
     debouce((entries) => {
@@ -28,6 +31,17 @@ function Gamecard({ game, index }) {
     }, 500),
     []
   );
+
+  const onHoverHandler = (value) => {
+    if (screenWidth > 979) {
+      setCurrentHover(value);
+      value === -1 ? setPlayVideo(false) : setPlayVideo(true);
+    }
+  };
+
+  useEffect(() => {
+    screenWidth > 970 && setShowMore(false);
+  }, [screenWidth]);
 
   useEffect(() => {
     isMounted.current = true;
@@ -44,11 +58,6 @@ function Gamecard({ game, index }) {
 
     return () => observer.disconnect();
   });
-
-  const onHoverHandler = (value) => {
-    setCurrentHover(value);
-    value === -1 ? setPlayVideo(false) : setPlayVideo(true);
-  };
 
   return (
     <div
@@ -124,62 +133,77 @@ function Gamecard({ game, index }) {
           <div className="game_card_title_wrapper">
             <h3>{game.name}</h3>
           </div>
-
-          {show && (
-            <div className="game_card_more_container">
-              <div
-                className={`game_card_more_section ${
-                  currentHover === index ? "show" : ""
-                }`}
-              >
-                <div className="game_card_more_about_table">
-                  <div className="game_card_table_row_container">
-                    <div className="game_card_table_row">
-                      <div className="row_title">Genres:</div>
-                      {game.genres.map((genre, index) => (
-                        <div className="row_element" key={index}>
-                          {genre.name}
-                          {index !== game.genres.length - 1 && ","}
-                        </div>
-                      ))}
-                    </div>
-                    {game.metacritic && (
-                      <div className="game_card_table_row">
-                        <div className="row_title">Metacritic:</div>
-                        <div className="row_element">
-                          {game.metacritic
-                            ? `${game.metacritic}%`
-                            : "Not rated yet"}{" "}
-                        </div>
+          {showMore || screenWidth > 979 || (
+            <div>
+              <Button onClick={() => setShowMore(true)} size="small" fullWidth>
+                View more
+              </Button>
+            </div>
+          )}
+          <div className="game_card_more_container">
+            <div
+              className={`game_card_more_section ${
+                currentHover === index || showMore ? "show" : ""
+              }`}
+            >
+              <div className="game_card_more_about_table">
+                <div className="game_card_table_row_container">
+                  <div className="game_card_table_row">
+                    <div className="row_title">Genres:</div>
+                    {game.genres.map((genre, index) => (
+                      <div className="row_element" key={index}>
+                        {genre.name}
+                        {index !== game.genres.length - 1 && ","}
                       </div>
-                    )}
-
+                    ))}
+                  </div>
+                  {game.metacritic && (
                     <div className="game_card_table_row">
-                      <div className="row_title">Release Date:</div>
+                      <div className="row_title">Metacritic:</div>
                       <div className="row_element">
-                        {game.released
-                          ? new Date(game.released).toDateString()
-                          : ""}
+                        {game.metacritic
+                          ? `${game.metacritic}%`
+                          : "Not rated yet"}{" "}
                       </div>
+                    </div>
+                  )}
+
+                  <div className="game_card_table_row">
+                    <div className="row_title">Release Date:</div>
+                    <div className="row_element">
+                      {game.released
+                        ? new Date(game.released).toDateString()
+                        : ""}
                     </div>
                   </div>
                 </div>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={() => {
-                    setGames([]);
-                    setPage(1);
-                    history.push(`/games/${game.id}/${game.name}`);
-                  }}
-                  color="primary"
-                  style={{ color: "white", marginTop: "0.5em" }}
-                >
-                  See More
-                </Button>
               </div>
+              {showMore && screenWidth < 980 && (
+                <div>
+                  <Button
+                    onClick={() => setShowMore(false)}
+                    size="small"
+                    fullWidth
+                  >
+                    View less
+                  </Button>
+                </div>
+              )}
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={() => {
+                  setGames([]);
+                  setPage(1);
+                  history.push(`/games/${game.id}/${game.name}`);
+                }}
+                color="primary"
+                style={{ color: "white", marginTop: "0.5em" }}
+              >
+                See More
+              </Button>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

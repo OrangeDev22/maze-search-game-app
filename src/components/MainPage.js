@@ -53,6 +53,15 @@ function MainPage() {
       {screenWidth > 979 && (
         <ImageSLider games={games.slice(0, 7)} key="ImageSlider" />
       )}
+      <div
+        style={{
+          margin: `${screenWidth > 979 ? "1em 0 " : "8px 0"}`,
+          padding: `${screenWidth > 979 ? " 1em 0" : "8px 0 "}`,
+          textAlign: "center",
+        }}
+      >
+        <h2>Top trending games</h2>
+      </div>
       <GamesList games={games} key="GamesList" />
     </main>
   );
