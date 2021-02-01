@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { CircularProgress } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
-import Stores from "./Stores";
+import Loading from "../components/Loading";
+import Stores from "../components/Stores";
 import axios from "../axios";
 import "../css/GameDetails.css";
-import Gamemeta from "./Gamemeta";
-import ScreenshotsSlider from "./ScreenshotsSlider";
-import GamesList from "./GamesList";
-import GameDetailsCard from "./GameDetailsCard";
+import Gamemeta from "../components/Gamemeta";
+import ScreenshotsSlider from "../components/ScreenshotsSlider";
+import GamesList from "../components/GamesList";
+import GameDetailsCard from "../components/GameDetailsCard";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
@@ -102,17 +101,7 @@ function GameDetails() {
     }
   }, [primaryDetails]);
 
-  if (loading)
-    return (
-      <div
-        className="circular_progress_wrapper"
-        style={{ width: 77, height: 77, margin: "auto", marginTop: "2em" }}
-      >
-        <CircularProgress
-          style={{ width: "100%", height: "100%", color: grey[700] }}
-        />
-      </div>
-    );
+  if (loading) return <Loading />;
 
   return (
     <div className="game_details">

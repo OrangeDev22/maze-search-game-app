@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../axios";
-import ImageSLider from "./ImageSlider";
-import GamesList from "./GamesList";
+import ImageSLider from "../components/ImageSlider";
+import GamesList from "../components/GamesList";
 import { useGames } from "../contexts/GamesProvider";
 import { useApp } from "../contexts/AppProvider";
+import Loading from "../components/Loading";
 // import { ClickAwayListener } from "@material-ui/core";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
 function MainPage() {
   const { games, setGames, page } = useGames();
+  const [loading, setLoading] = useState(true);
   const pageSize = 20;
   const { screenWidth } = useApp();
 
@@ -27,7 +29,9 @@ function MainPage() {
         })
         .then((res) => {
           setGames((prev) => [...prev, ...res.data.results]);
-        });
+        })
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
     }
 
     fetchData();
@@ -47,6 +51,8 @@ function MainPage() {
     };
     cacheImages(pictures);
   }, [games]);
+
+  if (loading) return <Loading />;
 
   return (
     <main>
