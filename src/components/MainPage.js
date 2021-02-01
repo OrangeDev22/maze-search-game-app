@@ -55,8 +55,8 @@ function MainPage() {
       )}
       <div
         style={{
-          margin: `${screenWidth > 979 ? "1em 0 " : "8px 0"}`,
-          padding: `${screenWidth > 979 ? " 1em 0" : "8px 0 "}`,
+          margin: `${screenWidth > 979 ? "1em 0 " : "4px 0"}`,
+          padding: `${screenWidth > 979 ? " 1em 0" : "4px 0 "}`,
           textAlign: "center",
         }}
       >

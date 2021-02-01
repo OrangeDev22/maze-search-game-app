@@ -100,14 +100,7 @@ function Gamecard({ game, index }) {
                   loop
                   muted
                   playing={playVideo}
-                  url={`${
-                    currentHover === index &&
-                    show &&
-                    playVideo &&
-                    gameClip !== null
-                      ? gameClip.clip
-                      : ""
-                  }`}
+                  url={`${playVideo && gameClip !== null ? gameClip.clip : ""}`}
                 />
               </div>
               <div className="image_wrapper">

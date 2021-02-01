@@ -26,6 +26,14 @@ body {
 span {
   color: darkgray;
 }
+
+@media screen and (max-width: 450px) {
+  .showAutoComplete.MuiToolbar-gutters {
+    padding: 0px !important;
+    transition: 200ms;
+  }
+}
+
 /*
 
   display: grid;
