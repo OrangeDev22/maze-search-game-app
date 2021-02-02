@@ -13,7 +13,7 @@
   width: 100%;
   overflow-x: auto;
   cursor: pointer;
-  max-height: 75.73px;
+  max-height: 85.73px;
 }
 
 .screenshots_preview_container::-webkit-scrollbar {
@@ -27,6 +27,7 @@
 
 .screenshot_preview_wrapper {
   width: 25%;
+  min-width: 115px;
 }
 
 .screenshot_preview_wrapper > img {
