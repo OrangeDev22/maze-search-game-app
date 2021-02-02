@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import Navbar from "./components/Navbar";
 import GameDetails from "./pages/GameDetails";
+import TrendingDate from "./pages/TrendingDate";
 import { AppProvider } from "./contexts/AppProvider";
 
 function App() {
@@ -34,14 +35,19 @@ function App() {
           <GamesProvider>
             <Router>
               <Navbar />
-              <Switch>
-                <Route exact path="/">
-                  <MainPage />
-                </Route>
-                <Route path="/games/:rawId/:gameName">
-                  <GameDetails />
-                </Route>
-              </Switch>
+              <main>
+                <Switch>
+                  <Route exact path="/">
+                    <MainPage />
+                  </Route>
+                  <Route path="/games/:rawId/:gameName">
+                    <GameDetails />
+                  </Route>{" "}
+                  <Route path="/:time">
+                    <TrendingDate />
+                  </Route>
+                </Switch>
+              </main>
             </Router>
           </GamesProvider>
         </AppProvider>

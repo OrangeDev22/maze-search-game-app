@@ -86,8 +86,6 @@ function Navbar() {
   const history = useHistory();
 
   const autocompleteHandler = (value) => {
-    setGames([]);
-    setPage(1);
     setAutoComplete(false);
     value instanceof Object && history.push(`/games/${value.id}/${value.name}`);
   };

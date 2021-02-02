@@ -83,4 +83,8 @@
   }
 }
 @media screen and (max-width: 979px) {
+  .screenshots_preview_container::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
 }

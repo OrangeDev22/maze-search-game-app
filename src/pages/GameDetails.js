@@ -6,6 +6,7 @@ import axios from "../axios";
 import "../css/GameDetails.css";
 import Gamemeta from "../components/Gamemeta";
 import ScreenshotsSlider from "../components/ScreenshotsSlider";
+import GameAbout from "../components/GameAbout";
 import GamesList from "../components/GamesList";
 import GameDetailsCard from "../components/GameDetailsCard";
 
@@ -121,37 +122,7 @@ function GameDetails() {
           publisher={publisher}
         />
       </div>
-      <div className="game_details_info">
-        <div className="game_details_main">
-          {primaryDetails.description_raw && (
-            <div className="game_details_description">
-              {primaryDetails.description_raw
-                .split("#")
-                .map((section, index) => {
-                  if (index > 0) {
-                    return section.split("\n").map((text, i) => {
-                      return i === 0 ? (
-                        <h3 key={`game_details_about_title_${i}`}>{text}</h3>
-                      ) : (
-                        <p key={`game_details_about_text_${i}`}>{text}</p>
-                      );
-                    });
-                  } else {
-                    return (
-                      <div
-                        className="game_details_about"
-                        key={`game_details_about_title_header_${index}`}
-                      >
-                        <h3>About</h3>
-                        <p>{section}</p>
-                      </div>
-                    );
-                  }
-                })}
-            </div>
-          )}
-        </div>
-      </div>
+      <GameAbout about={primaryDetails.description_raw} />
       <div className="game_details_meta">
         <Gamemeta
           metaDetails={primaryDetails}

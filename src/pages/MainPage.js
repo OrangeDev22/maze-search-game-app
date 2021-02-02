@@ -5,12 +5,15 @@ import GamesList from "../components/GamesList";
 import { useGames } from "../contexts/GamesProvider";
 import { useApp } from "../contexts/AppProvider";
 import Loading from "../components/Loading";
+import { useLocation } from "react-router-dom";
 // import { ClickAwayListener } from "@material-ui/core";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
 function MainPage() {
-  const { games, setGames, page } = useGames();
+  const location = useLocation();
+  const { games, setGames, page, setPage } = useGames();
+  const [currentLocation, setCurrentLocation] = useState("");
   const [loading, setLoading] = useState(true);
   const pageSize = 20;
   const { screenWidth } = useApp();
@@ -31,11 +34,23 @@ function MainPage() {
           setGames((prev) => [...prev, ...res.data.results]);
         })
         .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+          setCurrentLocation(location.pathname);
+        });
     }
 
     fetchData();
   }, [page, setGames]);
+
+  useEffect(() => {
+    if (!location) return;
+
+    return () => {
+      setGames([]);
+      setPage(1);
+    };
+  }, [location.pathname]);
 
   useEffect(() => {
     const pictures = games.map((game) => game.background_image);
@@ -55,7 +70,7 @@ function MainPage() {
   if (loading) return <Loading />;
 
   return (
-    <main>
+    <div>
       {screenWidth > 979 && (
         <ImageSLider games={games.slice(0, 7)} key="ImageSlider" />
       )}
@@ -69,7 +84,7 @@ function MainPage() {
         <h2>Top trending games</h2>
       </div>
       <GamesList games={games} key="GamesList" />
-    </main>
+    </div>
   );
 }
 

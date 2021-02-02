@@ -9,15 +9,9 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
-import {
-  FaFire,
-  FaHome,
-  FaStar,
-  FaCrown,
-  FaStore,
-  FaBinoculars,
-} from "react-icons/fa";
+import { useGames } from "../contexts/GamesProvider";
+import { useHistory } from "react-router-dom";
+import { FaFire, FaHome, FaStar, FaCrown } from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -37,7 +31,13 @@ const date = new Date();
 const year = date.getFullYear();
 
 function TemporaryDrawer({ isOpen, setAnchor }) {
+  const { setGames, setPage } = useGames();
+  const history = useHistory();
   const classes = useStyles();
+
+  const redirectHandler = (link) => {
+    history.push(link);
+  };
 
   const toggleDrawer = (event) => {
     if (
@@ -65,7 +65,7 @@ function TemporaryDrawer({ isOpen, setAnchor }) {
         </ListItem>
 
         <Divider />
-        <ListItem button key={"HOME"}>
+        <ListItem button key={"HOME"} onClick={() => redirectHandler("/")}>
           <ListItemIcon>
             <FaHome size={24} />
           </ListItemIcon>
@@ -76,28 +76,24 @@ function TemporaryDrawer({ isOpen, setAnchor }) {
       <Divider />
 
       <List onClick={toggleDrawer}>
-        {["This Week", "30 Days", `Popular ${year - 1}`].map((text, index) => (
-          <ListItem button key={index}>
+        {[
+          { link: "/this-week", text: "This Week" },
+          { link: "/last-month", text: "30 Days" },
+          { link: "/last-year", text: `Popular ${year - 1}` },
+        ].map((element, index) => (
+          <ListItem
+            button
+            key={index}
+            onClick={() => {
+              redirectHandler(element.link);
+            }}
+          >
             <ListItemIcon>
               {index === 0 && <FaFire size={24} />}
               {index === 1 && <FaStar size={24} />}
               {index === 2 && <FaCrown size={24} />}
             </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-
-      <Divider />
-      <List onClick={toggleDrawer}>
-        {["Platforms", "Stores", "Genres"].map((text, index) => (
-          <ListItem button key={index}>
-            <ListItemIcon>
-              {index === 0 && <GiConsoleController size={24} />}
-              {index === 1 && <FaStore size={24} />}
-              {index === 2 && <FaBinoculars size={24} />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={element.text} />
           </ListItem>
         ))}
       </List>
