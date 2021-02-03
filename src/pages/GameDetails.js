@@ -38,41 +38,40 @@ function GameDetails() {
   useEffect(() => {
     setLoading(true);
     const fetchGameData = () => {
-      if (rawId) {
-        axios
-          .get(`/games/${rawId}`, {
-            params: {
-              key: API_KEY,
-            },
-          })
-          .then((response) => {
-            response.status === 200 && setPrimary(response.data);
-            axios
-              .get(`/games/${rawId}/screenshots`, {
-                params: {
-                  key: API_KEY,
-                },
-              })
-              .then((response) => {
-                setScreenshots(response.data.results);
-                axios
-                  .get(`/games/${rawId}/suggested`, {
-                    params: {
-                      key: API_KEY,
-                      page_size: 8,
-                    },
-                  })
-                  .then((response) => {
-                    setSuggestedGames(response.data.results);
-                  })
-                  .finally(() => {
-                    if (isMounted.current) {
-                      setLoading(false);
-                    }
-                  });
-              });
-          });
-      }
+      axios
+        .get(`/games/${rawId}`, {
+          params: {
+            key: API_KEY,
+          },
+        })
+        .then((response) => {
+          response.status === 200 && setPrimary(response.data);
+          axios
+            .get(`/games/${rawId}/screenshots`, {
+              params: {
+                key: API_KEY,
+              },
+            })
+            .then((response) => {
+              setScreenshots(response.data.results);
+              axios
+                .get(`/games/${rawId}/suggested`, {
+                  params: {
+                    key: API_KEY,
+                    page_size: 8,
+                  },
+                })
+                .then((response) => {
+                  setSuggestedGames(response.data.results);
+                })
+                .finally(() => {
+                  if (isMounted.current) {
+                    setLoading(false);
+                  }
+                });
+            });
+        })
+        .catch(() => history.push("/"));
     };
     fetchGameData();
     return () => {
@@ -141,7 +140,7 @@ function GameDetails() {
         </div>
 
         {suggestedGames && (
-          <GamesList games={suggestedGames} inDetails={true} />
+          <GamesList games={suggestedGames} disableFetchMore={true} />
         )}
       </div>
     </div>

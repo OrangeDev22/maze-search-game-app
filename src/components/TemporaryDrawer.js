@@ -1,7 +1,6 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { GiConsoleController } from "react-icons/gi";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -9,7 +8,6 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { useGames } from "../contexts/GamesProvider";
 import { useHistory } from "react-router-dom";
 import { FaFire, FaHome, FaStar, FaCrown } from "react-icons/fa";
 
@@ -31,7 +29,6 @@ const date = new Date();
 const year = date.getFullYear();
 
 function TemporaryDrawer({ isOpen, setAnchor }) {
-  const { setGames, setPage } = useGames();
   const history = useHistory();
   const classes = useStyles();
 

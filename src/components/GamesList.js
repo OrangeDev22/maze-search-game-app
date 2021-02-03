@@ -5,9 +5,9 @@ import { Button, CircularProgress } from "@material-ui/core";
 import { useGames } from "../contexts/GamesProvider";
 import Gamecard from "./Gamecard";
 
-function GamesList({ games, inDetails }) {
+function GamesList({ games, disableFetchMore }) {
   const visorRef = useRef();
-  const cancelMore = inDetails ? true : false;
+  const cancelMore = disableFetchMore ? true : false;
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const { setPage } = useGames();

@@ -5,12 +5,11 @@ import GamesList from "../components/GamesList";
 import axios from "../axios";
 import Loading from "../components/Loading";
 
-const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
-
 function TrendingDate() {
   const { time } = useParams();
   const history = useHistory();
   const location = useLocation();
+  const currentLocation = location.pathname;
   const [limitDate, setLimitDate] = useState("");
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
@@ -53,7 +52,7 @@ function TrendingDate() {
         history.push("/");
         break;
     }
-  }, [time]);
+  }, [time, history]);
 
   useEffect(() => {
     function fetchData() {
@@ -75,16 +74,16 @@ function TrendingDate() {
       }
     }
     fetchData();
-  }, [limitDate, page]);
+  }, [limitDate, page, setGames]);
 
   useEffect(() => {
-    if (!location) return;
+    if (!currentLocation) return;
 
     return () => {
       setGames([]);
       setPage(1);
     };
-  }, [location.pathname]);
+  }, [currentLocation, setGames, setPage]);
 
   useEffect(() => {
     const pictures = games.map((game) => game.background_image);

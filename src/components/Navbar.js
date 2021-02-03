@@ -16,7 +16,6 @@ import { useHistory } from "react-router-dom";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import MenuIcon from "@material-ui/icons/Menu";
 import axios from "../axios";
-import { useGames } from "../contexts/GamesProvider";
 import { useApp } from "../contexts/AppProvider";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
@@ -81,13 +80,16 @@ function Navbar() {
   const [typingTimeout, setTypingTimeout] = useState(0);
   const classes = useStyles();
   const [anchor, setAnchor] = useState(false);
-  const { setGames, setPage } = useGames();
   const { screenWidth } = useApp();
   const history = useHistory();
 
   const autocompleteHandler = (value) => {
     setAutoComplete(false);
-    value instanceof Object && history.push(`/games/${value.id}/${value.name}`);
+    if (value instanceof Object) {
+      history.push(`/games/${value.id}/${value.name}`);
+    } else {
+      history.push(`/games/search?name=${value}`);
+    }
   };
 
   const typingHandler = async (e) => {

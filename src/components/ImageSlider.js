@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { makeStyles } from "@material-ui/core";
@@ -16,9 +16,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ImageSlider = ({ games, screenshots }) => {
-  const [current, setCurrent] = useState(0);
-  const classes = useStyles();
   const { setGames, setPage } = useGames();
+  const [current, setCurrent] = useState(0);
+  const [sliderTimeout, setSliderTimeout] = useState(0);
+  const classes = useStyles();
+
+  const setInfiniteSliderTimeout = () => {
+    if (sliderTimeout) {
+      clearTimeout(sliderTimeout);
+    }
+    setSliderTimeout(
+      setTimeout(function () {
+        nextSlide();
+      }, 5000)
+    );
+  };
 
   const nextSlide = useCallback(() => {
     setCurrent(current === games.length - 1 ? 0 : current + 1);
@@ -27,6 +39,19 @@ const ImageSlider = ({ games, screenshots }) => {
   const prevSlide = useCallback(() => {
     setCurrent(current === 0 ? games.length - 1 : current - 1);
   }, [current, games.length]);
+
+  useEffect(() => {
+    setSliderTimeout(
+      setTimeout(function () {
+        nextSlide();
+      }, 5000)
+    );
+
+    return () => {
+      clearTimeout(sliderTimeout);
+      setSliderTimeout(null);
+    };
+  }, [current]);
 
   return (
     <div className="slider" key="slider">

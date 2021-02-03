@@ -1,24 +1,26 @@
-import React, { useState, useCallback } from "react";
-import { makeStyles } from "@material-ui/core";
+import React, { useState, useCallback, useEffect } from "react";
 import "../css/Screenshots.css";
-
-const useStyles = makeStyles((theme) => ({
-  selectedThumb: {
-    background: theme.palette.secondary.main,
-  },
-}));
 
 const ScreenshotsSlider = ({ screenshots }) => {
   const [current, setCurrent] = useState(0);
-  const classes = useStyles();
+  const [sliderTimeout, setSliderTimeout] = useState(0);
 
   const nextSlide = useCallback(() => {
     setCurrent(current === screenshots.length - 1 ? 0 : current + 1);
   }, [current, screenshots.length]);
 
-  const prevSlide = useCallback(() => {
-    setCurrent(current === 0 ? screenshots.length - 1 : current - 1);
-  }, [current, screenshots.length]);
+  useEffect(() => {
+    setSliderTimeout(
+      setTimeout(function () {
+        nextSlide();
+      }, 5000)
+    );
+
+    return () => {
+      clearTimeout(sliderTimeout);
+      setSliderTimeout(null);
+    };
+  }, [current]);
 
   return (
     <div className="screenshot_slider" key="slider">

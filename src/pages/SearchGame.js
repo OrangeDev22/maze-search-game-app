@@ -1,45 +1,43 @@
 import React, { useEffect, useState } from "react";
-import axios from "../axios";
-import ImageSLider from "../components/ImageSlider";
-import GamesList from "../components/GamesList";
-import { useGames } from "../contexts/GamesProvider";
-import { useApp } from "../contexts/AppProvider";
-import Loading from "../components/Loading";
 import { useLocation } from "react-router-dom";
+import axios from "../axios";
+import { useGames } from "../contexts/GamesProvider";
+import GamesList from "../components/GamesList";
+import Loading from "../components/Loading";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 
-function MainPage() {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+function SearchGame() {
   const location = useLocation();
   const currentLocation = location.pathname;
-  const { games, setGames, page, setPage } = useGames();
+  const query = useQuery();
+  const searchName = query.get("name");
+  const { games, setGames, setPage } = useGames();
   const [loading, setLoading] = useState(true);
-  const pageSize = 20;
-  const { screenWidth } = useApp();
 
   useEffect(() => {
     async function fetchData() {
       axios
-        .get("/games/lists/main", {
+        .get("/games", {
           params: {
+            search: searchName,
             ordering: "-relevance",
-            discover: true,
-            page_size: pageSize,
-            page,
             key: API_KEY,
           },
         })
-        .then((res) => {
-          setGames((prev) => [...prev, ...res.data.results]);
+        .then((response) => {
+          setGames((prev) => [...prev, ...response.data.results]);
         })
-        .catch((error) => console.error(error))
         .finally(() => {
           setLoading(false);
         });
     }
-
     fetchData();
-  }, [page, setGames]);
+  }, []);
 
   useEffect(() => {
     if (!currentLocation) return;
@@ -69,21 +67,12 @@ function MainPage() {
 
   return (
     <div>
-      {screenWidth > 979 && (
-        <ImageSLider games={games.slice(0, 7)} key="ImageSlider" />
-      )}
-      <div
-        style={{
-          margin: `${screenWidth > 979 ? "1em 0 " : "4px 0"}`,
-          padding: `${screenWidth > 979 ? " 1em 0" : "4px 0 "}`,
-          textAlign: "center",
-        }}
-      >
-        <h2>Top trending games</h2>
+      <div style={{ margin: "8px 0px", textAlign: "center" }}>
+        <h2>Results of "{searchName}":</h2>
       </div>
-      <GamesList games={games} key="GamesList" />
+      <GamesList games={games} disableFetchMore={true} />
     </div>
   );
 }
 
-export default MainPage;
+export default SearchGame;

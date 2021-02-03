@@ -1,5 +1,11 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { FaXbox, FaWindows, FaPlaystation } from "react-icons/fa";
+import {
+  FaXbox,
+  FaWindows,
+  FaPlaystation,
+  FaAppStoreIos,
+  FaAndroid,
+} from "react-icons/fa";
 import { SiNintendoswitch } from "react-icons/si";
 import ReactPlayer from "react-player";
 import debouce from "just-debounce-it";
@@ -110,19 +116,23 @@ function Gamecard({ game, index }) {
           </div>
         </div>
         <div className="game_card_info">
-          <div className="game_card_platforms">
-            {game.parent_platforms.map((platform, index) => {
-              const platformToShow = platform.platform.name.toLowerCase();
-              return (
-                <div className="game_card_platform_image" key={index}>
-                  {platformToShow === "xbox" && <FaXbox />}
-                  {platformToShow === "pc" && <FaWindows />}
-                  {platformToShow === "playstation" && <FaPlaystation />}
-                  {platformToShow === "nintendo" && <SiNintendoswitch />}
-                </div>
-              );
-            })}
-          </div>
+          {game.parent_platforms && (
+            <div className="game_card_platforms">
+              {game.parent_platforms.map((platform, index) => {
+                const platformToShow = platform.platform.name.toLowerCase();
+                return (
+                  <div className="game_card_platform_image" key={index}>
+                    {platformToShow === "xbox" && <FaXbox />}
+                    {platformToShow === "pc" && <FaWindows />}
+                    {platformToShow === "playstation" && <FaPlaystation />}
+                    {platformToShow === "nintendo" && <SiNintendoswitch />}
+                    {platformToShow === "ios" && <FaAppStoreIos />}
+                    {platformToShow === "android" && <FaAndroid />}
+                  </div>
+                );
+              })}
+            </div>
+          )}
           <div className="game_card_title_wrapper">
             <h3>{game.name}</h3>
           </div>
