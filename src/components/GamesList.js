@@ -22,7 +22,7 @@ function GamesList({ games, disableFetchMore }) {
   }, []);
 
   useEffect(() => {
-    if (loadMore) {
+    if (loadMore && loading) {
       setPage((prev) => prev + 1);
     }
   }, [loading, loadMore, setPage]);
