@@ -12,14 +12,13 @@ function useQuery() {
 }
 
 function SearchGame() {
-  const location = useLocation();
-  const currentLocation = location.pathname;
   const query = useQuery();
   const searchName = query.get("name");
-  const { games, setGames, setPage } = useGames();
+  const { games, setGames } = useGames();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     async function fetchData() {
       axios
         .get("/games", {
@@ -37,31 +36,10 @@ function SearchGame() {
         });
     }
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (!currentLocation) return;
-
     return () => {
       setGames([]);
-      setPage(1);
     };
-  }, [currentLocation]);
-
-  useEffect(() => {
-    const pictures = games.map((game) => game.background_image);
-    const cacheImages = async (pictures) => {
-      const promises = await pictures.map((picture) => {
-        return new Promise(function (resolve, reject) {
-          const img = (new Image().src = picture);
-          img.onload = resolve();
-          img.onerror = reject();
-        });
-      });
-      await Promise.all(promises);
-    };
-    cacheImages(pictures);
-  }, [games]);
+  }, [searchName, setGames]);
 
   if (loading) return <Loading />;
 

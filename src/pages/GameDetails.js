@@ -84,7 +84,7 @@ function GameDetails() {
       setWebsite("");
       setSuggestedGames(null);
     };
-  }, [rawId]);
+  }, [rawId, history]);
 
   useEffect(() => {
     if (primaryDetails) {

@@ -10,15 +10,19 @@ const ScreenshotsSlider = ({ screenshots }) => {
   }, [current, screenshots.length]);
 
   useEffect(() => {
-    setSliderTimeout(
-      setTimeout(function () {
-        nextSlide();
-      }, 5000)
-    );
-
+    const setInfiniteSliderTimeout = () => {
+      if (sliderTimeout) {
+        clearTimeout(sliderTimeout);
+      }
+      setSliderTimeout(
+        setTimeout(function () {
+          nextSlide();
+        }, 5000)
+      );
+    };
+    setInfiniteSliderTimeout();
     return () => {
-      clearTimeout(sliderTimeout);
-      setSliderTimeout(null);
+      setSliderTimeout(0);
     };
   }, [current]);
 

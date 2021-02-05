@@ -37,8 +37,11 @@ function MainPage() {
           setLoading(false);
         });
     }
-
-    fetchData();
+    if (loading && page > 1) {
+      setPage(1);
+    } else {
+      fetchData();
+    }
   }, [page, setGames]);
 
   useEffect(() => {
@@ -46,24 +49,8 @@ function MainPage() {
 
     return () => {
       setGames([]);
-      setPage(1);
     };
-  }, [currentLocation]);
-
-  useEffect(() => {
-    const pictures = games.map((game) => game.background_image);
-    const cacheImages = async (pictures) => {
-      const promises = await pictures.map((picture) => {
-        return new Promise(function (resolve, reject) {
-          const img = (new Image().src = picture);
-          img.onload = resolve();
-          img.onerror = reject();
-        });
-      });
-      await Promise.all(promises);
-    };
-    cacheImages(pictures);
-  }, [games]);
+  }, [currentLocation, setPage]);
 
   if (loading) return <Loading />;
 
@@ -86,4 +73,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default React.memo(MainPage);

@@ -8,10 +8,8 @@ import {
 } from "react-icons/fa";
 import { SiNintendoswitch } from "react-icons/si";
 import ReactPlayer from "react-player";
-import debouce from "just-debounce-it";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { useGames } from "../contexts/GamesProvider";
 import { useApp } from "../contexts/AppProvider";
 
 function Gamecard({ game, index }) {
@@ -19,24 +17,20 @@ function Gamecard({ game, index }) {
   const [showMore, setShowMore] = useState(false);
   const cardRef = useRef();
   const gameClip = game.clip;
-  const { setGames, setPage } = useGames();
   const [currentHover, setCurrentHover] = useState(-1);
   const [playVideo, setPlayVideo] = useState(false);
   const isMounted = useRef(null);
   const history = useHistory();
   const { screenWidth } = useApp();
 
-  const onChange = useCallback(
-    debouce((entries) => {
-      const element = entries[0];
-      if (element.isIntersecting && isMounted.current) {
-        setShow(true);
-      } else {
-        setShow(false);
-      }
-    }, 500),
-    []
-  );
+  const onChange = useCallback((entries) => {
+    const element = entries[0];
+    if (element.isIntersecting) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  }, []);
 
   const onHoverHandler = (value) => {
     if (screenWidth > 979) {
@@ -110,7 +104,11 @@ function Gamecard({ game, index }) {
                 />
               </div>
               <div className="image_wrapper">
-                {show ? <img src={game.background_image} alt="" /> : <></>}
+                <img
+                  src={game.background_image}
+                  alt=""
+                  style={{ opacity: `${show ? 1 : 0}` }}
+                />
               </div>
             </div>
           </div>
@@ -196,8 +194,6 @@ function Gamecard({ game, index }) {
                 variant="contained"
                 fullWidth
                 onClick={() => {
-                  setGames([]);
-                  setPage(1);
                   history.push(`/games/${game.id}/${game.name}`);
                 }}
                 color="primary"

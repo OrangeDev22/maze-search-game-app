@@ -73,7 +73,11 @@ function TrendingDate() {
           .finally(() => setLoading(false));
       }
     }
-    fetchData();
+    if (loading && page > 1) {
+      setPage(1);
+    } else {
+      fetchData();
+    }
   }, [limitDate, page, setGames]);
 
   useEffect(() => {
@@ -81,24 +85,8 @@ function TrendingDate() {
 
     return () => {
       setGames([]);
-      setPage(1);
     };
   }, [currentLocation, setGames, setPage]);
-
-  useEffect(() => {
-    const pictures = games.map((game) => game.background_image);
-    const cacheImages = async (pictures) => {
-      const promises = await pictures.map((picture) => {
-        return new Promise(function (resolve, reject) {
-          const img = (new Image().src = picture);
-          img.onload = resolve();
-          img.onerror = reject();
-        });
-      });
-      await Promise.all(promises);
-    };
-    cacheImages(pictures);
-  }, [games]);
 
   if (loading) return <Loading />;
 
@@ -112,4 +100,4 @@ function TrendingDate() {
   );
 }
 
-export default TrendingDate;
+export default React.memo(TrendingDate);

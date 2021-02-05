@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import "../css/GamesList.css";
-import debouce from "just-debounce-it";
 import { Button, CircularProgress } from "@material-ui/core";
 import { useGames } from "../contexts/GamesProvider";
 import Gamecard from "./Gamecard";
@@ -12,18 +11,15 @@ function GamesList({ games, disableFetchMore }) {
   const [loadMore, setLoadMore] = useState(false);
   const { setPage } = useGames();
 
-  const onChange = useCallback(
-    debouce((entries) => {
-      const element = entries[0];
-      // console.log(element.isIntersecting);
-      if (element.isIntersecting) {
-        setLoading(true);
-      } else {
-        setLoading(false);
-      }
-    }),
-    []
-  );
+  const onChange = useCallback((entries) => {
+    const element = entries[0];
+    // console.log(element.isIntersecting);
+    if (element.isIntersecting) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (loadMore) {

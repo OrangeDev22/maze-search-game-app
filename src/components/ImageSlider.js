@@ -41,15 +41,9 @@ const ImageSlider = ({ games, screenshots }) => {
   }, [current, games.length]);
 
   useEffect(() => {
-    setSliderTimeout(
-      setTimeout(function () {
-        nextSlide();
-      }, 5000)
-    );
-
+    setInfiniteSliderTimeout();
     return () => {
-      clearTimeout(sliderTimeout);
-      setSliderTimeout(null);
+      setSliderTimeout(0);
     };
   }, [current]);
 
