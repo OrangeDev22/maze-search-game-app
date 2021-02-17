@@ -2,6 +2,7 @@
   padding: 1em;
 }
 .game_details_screenshots {
+  max-width: 800px;
   margin-top: 1em;
 }
 
@@ -25,7 +26,7 @@
   margin: auto;
   display: grid;
   justify-content: center;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 2fr;
   align-content: center;
   justify-content: center;
   gap: 1em;
@@ -77,9 +78,6 @@ p {
   gap: 0.5em;
   background-color: var(--clr-details-background);
   border-radius: 1em;
-}
-
-.game_details_platforms {
 }
 
 .game_meta_block {
