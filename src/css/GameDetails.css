@@ -26,7 +26,7 @@
   margin: auto;
   display: grid;
   justify-content: center;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 1fr;
   align-content: center;
   justify-content: center;
   gap: 1em;
