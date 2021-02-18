@@ -47,18 +47,20 @@ const ScreenshotsSlider = ({ screenshots }) => {
             </div>
           ))}
       </div>
-      <div className="screenshots_preview_container">
-        {screenshots.map((screenshot, index) => (
-          <div
-            className={`screenshot_preview_wrapper ${
-              current === index ? "selected" : "unselected"
-            }`}
-            key={`screenshot_preview_${index}`}
-            onClick={() => setCurrent(index)}
-          >
-            <img key={index} src={screenshot.image} alt="" />
-          </div>
-        ))}
+      <div style={{ position: "relative", width: "100%", height: "86px" }}>
+        <div className="screenshots_preview_container">
+          {screenshots.map((screenshot, index) => (
+            <div
+              className={`screenshot_preview_wrapper ${
+                current === index ? "selected" : "unselected"
+              }`}
+              key={`screenshot_preview_${index}`}
+              onClick={() => setCurrent(index)}
+            >
+              <img key={index} src={screenshot.image} alt="" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
