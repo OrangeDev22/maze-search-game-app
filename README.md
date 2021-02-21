@@ -1,3 +1,11 @@
+# Games directory React.js App.
+
+powered by [RAWG.io](https://rawg.io/apidocs) video games API.
+
+![screenshot](https://raw.githubusercontent.com/OrangeDev22/maze-search-game-app/main/screenshot.JPG)
+
+this project was built using React.js, MaterialUi, and RAW.io API.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
