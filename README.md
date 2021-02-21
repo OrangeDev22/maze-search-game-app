@@ -8,9 +8,9 @@ this project was built using React.js, MaterialUi, and RAW.io API.
 
 # API KEY
 
-create a .env file after obtaining a key from RAW.io API.
+You'll need to add the key to your enviroment file after obtaining a key from RAW.io API.
 
-`REACT_APP_GAME_RAWG_API_KEY=*YOUR_API_KEY*`
+`GAME_RAWG_API_KEY=*YOUR_API_KEY*`
 
 # Getting Started with Create React App
 
