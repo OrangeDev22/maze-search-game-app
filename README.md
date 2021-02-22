@@ -2,6 +2,8 @@
 
 powered by [RAWG.io](https://rawg.io/apidocs) video games API.
 
+#### Live Demo here: https://lucid-gates-3fa594.netlify.app/
+
 ![screenshot](https://raw.githubusercontent.com/OrangeDev22/maze-search-game-app/main/screenshot.JPG)
 
 this project was built using React.js, MaterialUi, and RAW.io API.
