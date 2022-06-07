@@ -7,7 +7,6 @@ import "../css/GameDetails.css";
 import Gamemeta from "../components/Gamemeta";
 import ScreenshotsSlider from "../components/ScreenshotsSlider";
 import GameAbout from "../components/GameAbout";
-import GamesList from "../components/GamesList";
 import GameDetailsCard from "../components/GameDetailsCard";
 
 const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
@@ -102,7 +101,6 @@ function GameDetails() {
   }, [primaryDetails]);
 
   if (loading) return <Loading />;
-
   return (
     <div className="game_details">
       <div className="game_details_wrapper">
@@ -132,17 +130,18 @@ function GameDetails() {
           ageRating={ageRating}
           developer={developer}
         />
-        <Stores stores={primaryDetails.stores} />
+        <Stores stores={primaryDetails.stores} gameId={rawId} />
       </div>
-      <div className="game_details_suggested_games">
+      {/* API End point only available for payed users */}
+      {/* <div className="game_details_suggested_games">
         <div style={{ textAlign: "center", margin: "1em 0 1em 0" }}>
           <h2>Similar titles</h2>
         </div>
-
+        {console.log("--suggestedGames", suggestedGames)}
         {suggestedGames && (
           <GamesList games={suggestedGames} disableFetchMore={true} />
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

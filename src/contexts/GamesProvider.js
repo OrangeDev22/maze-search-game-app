@@ -16,7 +16,6 @@ export const GamesProvider = ({ children }) => {
     page,
     setPage,
   };
-
   return (
     <GamesContext.Provider value={value}>{children}</GamesContext.Provider>
   );

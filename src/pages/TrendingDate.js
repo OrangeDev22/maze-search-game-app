@@ -4,7 +4,7 @@ import { useGames } from "../contexts/GamesProvider";
 import GamesList from "../components/GamesList";
 import axios from "../axios";
 import Loading from "../components/Loading";
-
+const API_KEY = process.env.REACT_APP_GAME_RAWG_API_KEY;
 function TrendingDate() {
   const { time } = useParams();
   const history = useHistory();
@@ -64,9 +64,9 @@ function TrendingDate() {
               page,
               page_size: pageSize,
               dates: limitDate,
+              key: API_KEY,
             },
           })
-          .catch((error) => console.log(error))
           .then((response) => {
             setGames((prev) => [...prev, ...response.data.results]);
           })
