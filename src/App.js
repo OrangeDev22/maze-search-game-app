@@ -29,9 +29,56 @@ function App() {
     },
   });
 
+  const customers = [
+    {
+      id: 1,
+      name: "John Doe",
+    },
+    {
+      id: 2,
+      name: "Jane Doe",
+    },
+    {
+      id: 3,
+      name: "Richard Roe",
+    },
+  ];
+
+  const orders = [
+    {
+      id: 1,
+      customerId: 1,
+      product: "M1 MacBook Air",
+      price: 999,
+    },
+    {
+      id: 2,
+      customerId: 2,
+      product: "M1 MacBook Pro",
+      price: 1299,
+    },
+    {
+      id: 3,
+      customerId: 1,
+      product: "Dell XPS 9310",
+      price: 1199,
+    },
+  ];
+
+  function denormalize(primary, related, relatedName, referenceId) {
+    return primary.map((object) => {
+      const newRelatedList = related.filter(
+        (item) => item[referenceId] === object.id
+      );
+      return { ...object, [relatedName]: newRelatedList };
+    });
+  }
+
+  console.log("--test", denormalize(customers, orders, "orders", "customerId"));
+
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme} key="user">
         <AppProvider>
           <GamesProvider>
             <Router>
